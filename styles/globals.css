@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
@@ -13,4 +17,19 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.blog-text pre{
+  background:#f4f4f4;
+  padding:20px;
+  margin:20px 0;
+  line-height:2.3;
+}
+
+.blog-text h1{
+  font-size:35px;
+}
+
+.blog-text h2,.blog-text h3,.blog-text h4{
+  font-size:27px;
 }
