@@ -2,11 +2,11 @@ import Link from 'next/link'
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import Layout from '../../../components/Layout'
-import Post from '../../../components/Post'
-import { sortByDate } from '../../../utils/index'
-import { POST_PER_PAGE } from '../../../config'
-import Pagination from '../../../components/Pagination'
+import Layout from '@/components/Layout'
+import Post from '@/components/Post'
+import { sortByDate } from '@/utils/index'
+import { POST_PER_PAGE } from '@/config/index'
+import Pagination from '@/components/Pagination'
 
 export default function BlogPage({ posts, numPages, currentPage }) {
     return (
@@ -34,11 +34,9 @@ export async function getStaticPaths() {
 
     for (let i = 1; i <= numPages; i++) {
         paths.push({
-            params: { page_index: i.toString() }
+            params: { page_index: i.toString() },
         })
     }
-
-    console.log(paths)
 
     return {
         paths,
@@ -48,20 +46,21 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    const page = parseInt((params && params.page_index))
+    const page = parseInt((params && params.page_index) || 1)
 
+    
     const files = fs.readdirSync(path.join('posts'))
-
+    
     const posts = files.map(filename => {
         const slug = filename.replace('.md', '')
-
+        
         const markDownWithMeta = fs.readFileSync(path.join('posts', filename), 'utf-8')
-
+        
         const { data: frontmatter } = matter(markDownWithMeta)
-
+        
         return { slug, frontmatter }
     })
-
+    
     const numPages = Math.ceil(files.length / POST_PER_PAGE)
     const pageIndex = page - 1
     const orderedPosts = posts

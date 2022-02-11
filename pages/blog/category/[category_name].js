@@ -6,7 +6,7 @@ import Layout from '@/components/Layout'
 import Post from '@/components/Post'
 import {sortByDate} from '@/utils/index'
 
-export default function HomePage({posts}) {
+export default function CategoryBlogPage({posts}) {
   return (
     <Layout>
       <h1 className='text-5xl border-b-4 p-5 font-bold'>Latest Post</h1>
@@ -25,6 +25,10 @@ export default function HomePage({posts}) {
     </Layout>
   )
 }
+
+// export async function getstaticPaths(){
+//     cosnt files = fs.readdirSync(path.join('posts'))
+// }
 
 export async function getStaticProps(){
   const files = fs.readdirSync(path.join('posts'))
