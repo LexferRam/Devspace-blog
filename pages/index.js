@@ -1,10 +1,7 @@
 import Link from 'next/link'
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
 import Layout from '@/components/Layout'
 import Post from '@/components/Post'
-import {sortByDate} from '@/utils/index'
+import { getPosts } from '@/lib/post'
 
 export default function HomePage({posts}) {
   return (
@@ -27,22 +24,22 @@ export default function HomePage({posts}) {
 }
 
 export async function getStaticProps(){
-  const files = fs.readdirSync(path.join('posts'))
+  // const files = fs.readdirSync(path.join('posts'))
 
-  const posts = files.map(filename => {
-    const slug = filename.replace('.md', '')
+  // const posts = files.map(filename => {
+  //   const slug = filename.replace('.md', '')
 
-    const markDownWithMeta = fs.readFileSync(path.join('posts', filename), 'utf-8')
+  //   const markDownWithMeta = fs.readFileSync(path.join('posts', filename), 'utf-8')
 
-    const {data:frontmatter}=matter(markDownWithMeta)
+  //   const {data:frontmatter}=matter(markDownWithMeta)
 
-    return{slug,frontmatter}
-  })
+  //   return{slug,frontmatter}
+  // })
 
 
   return {
     props:{
-      posts :posts.sort(sortByDate).slice(0,6)
+      posts :getPosts().slice(0,6)
     }
   }
 }
